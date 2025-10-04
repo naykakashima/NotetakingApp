@@ -3,6 +3,7 @@ import { getAllNotes } from '../controllers/notesController.js';
 import { createNote } from '../controllers/notesController.js';
 import { updateNote } from '../controllers/notesController.js';
 import { deleteNote } from '../controllers/notesController.js';
+import { findNoteByTitle } from '../controllers/notesController.js';
 
 const router = express.Router();
 
@@ -17,6 +18,9 @@ router.put('/updatenote/:id', updateNote);
 
 // DELETE A NOTE
 router.delete('/deletenote/:id', deleteNote);
+
+// FIND A NOTE BY TITLE
+router.get('/findnote/:title', findNoteByTitle);
 
 export default router;
 
