@@ -3,13 +3,16 @@ import notesRoutes from './routes/notesRoutes.js';
 import { connectDB } from './config/db.js';
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 console.log(process.env.PORT);
 
-console.log(process.env.MONGO_URI);
+console.log(process.env.MONGO_URI); 
 
 connectDB();
+
+// MIDDLEWARE
+app.use(express.json());
 
 app.use("/api/notes", notesRoutes)
 
@@ -17,3 +20,4 @@ app.listen(PORT, () => {
     console.log('Server is running on port 5001');
 });
 
+ 
