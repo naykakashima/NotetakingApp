@@ -14,6 +14,10 @@ connectDB();
 // MIDDLEWARE
 app.use(express.json());
 
+ 
+
+
+// ROUTES
 app.use("/api/notes", notesRoutes)
 
 app.listen(PORT, () => {
