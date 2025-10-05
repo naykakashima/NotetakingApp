@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import Navbar from '../components/Navbar'
 import axios from 'axios'
 import { toast } from 'react-hot-toast'
+import { TrashIcon } from 'lucide-react'
+import Navbar from '../components/Navbar'
+
 
 const HomePage = () => {
   const backendURL = import.meta.env.VITE_URL;
   const [notes, setNotes] = useState([])
   const [loading, setLoading] = useState(true)
+  const [deleteButtonLoading, setDeleteButtonLoading] = useState(false)
 
   useEffect(() => {
     const fetchNotes = async () => {
@@ -36,11 +39,25 @@ const HomePage = () => {
       }
       finally {
               setLoading(false)
+              setDeleteButtonLoading(false)
             }
-          }
+      }
 
     fetchNotes()
   }, [backendURL])
+
+  const deleteNoteId = async (id) => {
+    try {
+      await axios.delete(`${backendURL}/api/notes/deletenote/${id}`);
+      setNotes(notes.filter(note => note._id !== id));
+      toast.success("Note deleted successfully");
+    } catch (error) {
+      console.error("Error deleting note:", error);
+      toast.error("Error deleting note");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen">
@@ -56,8 +73,15 @@ const HomePage = () => {
               <ul className="space-y-4">
                 {notes.map((note) => (
                   <li key={note._id} className="border p-4 rounded shadow">
-                    <h2 className="text-xl font-bold mb-2">{note.title}</h2>
-                    <p>{note.content}</p>
+                      <div className = "flex justify-between items-center mb-2">
+                      <h2 className="text-xl font-bold mb-2">{note.title}</h2>
+                      <p>{note.content}</p>
+                      <div class="card-actions justify-end">
+                        <button type="delete" class="btn btn-primary" disabled={deleteButtonLoading} onClick={() => deleteNoteId(note._id)}>
+                          {loading ? 'Deleting...' : 'Delete Note'}
+                        </button>
+                      </div>
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -68,5 +92,6 @@ const HomePage = () => {
     </div>
   )
 }
+
 
 export default HomePage
