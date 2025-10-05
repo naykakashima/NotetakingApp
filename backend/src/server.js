@@ -1,6 +1,10 @@
 import express from 'express';
 import notesRoutes from './routes/notesRoutes.js';
 import { connectDB } from './config/db.js';
+import cors from 'cors';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -11,11 +15,11 @@ console.log(process.env.MONGO_URI);
 
 connectDB();
 
+//CORS
+app.use(cors());
+
 // MIDDLEWARE
 app.use(express.json());
-
- 
-
 
 // ROUTES
 app.use("/api/notes", notesRoutes)
