@@ -1,7 +1,6 @@
 # 📝 Simple Note Taking App
 
 A minimal full-stack note-taking application built with **React**, **Express**, and **MongoDB**.  
-You can **create**, **view**, and **delete** notes — that’s it. Clean, simple, and functional.
 
 ---
 
